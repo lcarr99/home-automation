@@ -8,7 +8,7 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Hash;
 use Tests\TestCase;
 
-class PaymentControllerTest extends TestCase
+class CreatePaymentEndpointTest extends TestCase
 {
     use RefreshDatabase;
 

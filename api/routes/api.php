@@ -9,6 +9,8 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
         return $request->user();
     });
     Route::post('/payments', [\App\Http\Controllers\PaymentsController::class, 'createPayment']);
+    Route::delete('/payments/{id}', [\App\Http\Controllers\PaymentsController::class, 'deletePayment'])
+        ->whereNumber('id');
 });
 
 Route::post('/login', [LoginController::class, 'login'])->middleware('web');

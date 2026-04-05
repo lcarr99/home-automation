@@ -1,1 +1,2 @@
-/api/storage/*
+.idea/
+api/storage/*
