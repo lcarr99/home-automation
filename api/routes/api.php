@@ -8,6 +8,7 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::get('/user', function (Request $request) {
         return $request->user();
     });
+    Route::get('/payments', [\App\Http\Controllers\PaymentsController::class, 'getPayments']);
     Route::post('/payments', [\App\Http\Controllers\PaymentsController::class, 'createPayment']);
     Route::delete('/payments/{id}', [\App\Http\Controllers\PaymentsController::class, 'deletePayment'])
         ->whereNumber('id');

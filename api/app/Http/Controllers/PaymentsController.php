@@ -5,9 +5,13 @@ namespace App\Http\Controllers;
 use App\Domain\Budgeting\Exceptions\PaymentException;
 use App\Domain\Budgeting\Instructions\CreatePaymentInstructions;
 use App\Domain\Budgeting\Instructions\DeletePaymentInstructions;
+use App\Domain\Budgeting\Instructions\GetPaymentsInstructions;
 use App\Domain\Budgeting\Services\CreatePaymentService;
 use App\Domain\Budgeting\Services\DeletePaymentService;
+use App\Domain\Budgeting\Services\GetPaymentsService;
 use App\Http\Resources\PaymentResource;
+use App\Http\Validation\GetPaymentsValidation;
+use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 use App\Http\Validation\CreatePaymentValidation;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -16,6 +20,20 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class PaymentsController extends Controller
 {
+    /**
+     * @param GetPaymentsValidation $request
+     * @param GetPaymentsService $service
+     * @return AnonymousResourceCollection
+     */
+    public function getPayments(GetPaymentsValidation $request, GetPaymentsService $service): AnonymousResourceCollection
+    {
+        $payments = $service->getPayments(
+            GetPaymentsInstructions::fromRequest($request)
+        );
+
+        return PaymentResource::collection($payments);
+    }
+
     /**
      * @param CreatePaymentValidation $request
      * @param CreatePaymentService $service
