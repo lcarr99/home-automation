@@ -1,0 +1,33 @@
+
+services:
+  web:
+      image: "node:25-slim"
+      working_dir: /home/node/app
+      build:
+        context: ./web
+        dockerfile: web.dockerfile
+      volumes:
+          - ./web:/home/node/app
+      ports:
+          - "5173:5173"
+  composer:
+      image: "composer:latest"
+      volumes:
+          - ./api:/app
+  api:
+    build:
+      context: ./api
+      dockerfile: api.dockerfile
+    volumes:
+        - ./api:/var/www/html
+    networks:
+        - docker-config
+        - traefik
+    ports:
+        - "80:80"
+networks:
+    docker-config:
+        external: true
+    traefik:
+        external: true
+
