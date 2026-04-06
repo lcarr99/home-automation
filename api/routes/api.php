@@ -14,4 +14,5 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
         ->whereNumber('id');
 });
 
+Route::post('/logout', [\App\Http\Controllers\LogoutController::class, 'logout'])->middleware('auth:web');
 Route::post('/login', [LoginController::class, 'login'])->middleware('web');
